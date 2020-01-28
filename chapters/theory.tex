@@ -16,8 +16,7 @@
 		\label{eq:stuartlandauequation_polar}
 	\end{equation}
 
-	For the radial dynamical variable the Stuart-Landau oscillator has two fixed points where the derivative $\dot{r}$ vanishes $r = 0$ and $r = \sqrt{-\lambda /\operatorname{Re}(\gamma)}$ whose stability depends on $\lambda$ and $\operatorname{Re}(\gamma)$. For $\operatorname{Re}(\gamma) < 0 $ (supercritical case).
-	
+	For the radial dynamical variable the Stuart-Landau oscillator has two fixed points where the derivative $\dot{r}$ vanishes $r = 0$ and $r = \sqrt{-\lambda /\operatorname{Re}(\gamma)}$ whose stability depends on $\lambda$ and $\operatorname{Re}(\gamma)$. In the supercritical case ($\operatorname{Re}(\gamma) < 0 $) the oscillator has a focus at $r=0$ for $lambda < 0$ and a stable limit cycle in the case of $\lambda > 0$.  
 
 	\begin{figure}
 		\centering
@@ -30,7 +29,7 @@
 
 
 
-The limit cycle (LC) which is shown in fig \ref{fig:stuart_spiral} is depending on the ratio or $\lambda$ and $Re \left[\gamma \right]$.
+The limit cycle (LC) which is shown in (\ref{fig:stuart_spiral}, left) is depending on the ratio or $\lambda$ and $Re \left[\gamma \right]$. 
 
 
 
@@ -40,8 +39,14 @@ As can be seen in (eq. \ref{eq:stuartlandauequation}), the equation has a linear
 
 \subsection{Networks}
 
-Vertices blabla \
-Edges blabla. \
+In mathematics networks are collections of vertices and edges which connect the former. Vertices can have a name or some descriptor that makes them uniquely identifiable. Usually they are indexed $1..N$ for a network of size $N$. An edge $i \rightarrow j $ (with $i,j \in [1..N]$) is connecting vertex $i$ with vertex $j$. In a directed network there is a difference between $i \rightarrow j $ and $j \rightarrow i$. 
+todo: find some cool examples of directed and undirected networks.
+
+\begin{figure}
+	\includegraphics{\width=0.99\linewidth}{
+	}
+\end{figure}
+
 
 	\subsubsection{circulant Matrix}
     A circulant matrix has the same entries its row vectors, but with its entries rotated one element to the right relative to the previous row.
@@ -55,7 +60,7 @@ Edges blabla. \
 \begin{figure}
 	\centering
 	\includegraphics[width=0.99\linewidth]{pics/signal_mask_vis}
-	\caption{A timeseries (black) with constant interpolation ("sample \& hold") between samples and the corresponding masked signal (blue). The mask length is counted in clockcycles (cc) and the time per virtual node is counted in $\theta$. Here $\theta = 12s$ and $1cc = 16 \theta = 272s $}
+	\caption{A timeseries (black) with constant interpolation ("sample \& hold") between samples and the corresponding masked signal (blue). The mask length is counted in clockcycles (cc) and the time per virtual node is counted in $\theta$. Here $\theta = 12s$ and $1cc = 16 \ \theta = 272 s $}
 	\label{fig:signal_mask_vis}
 	%feedInVis_stuartlandau.nb
 \end{figure}
