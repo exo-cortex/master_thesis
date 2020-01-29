@@ -1,5 +1,8 @@
 \section{Theory}
 
+
+
+
 	\subsection{Stuart-Landau-Oscillator}
 	The Stuart-Landau oscillator is a dynamical system often used to model basic class 1 lasers. It can be written either as a single complex differential equation (\ref{eq:stuartlandauequation}) or a set of two equations written in polar coordinates (\ref{eq:stuartlandauequation_polar}). From the equation in polar coordinates easy to see that the equation has rotational symmetry as the radial differential equation does not change with the dynamical variable $\phi$.
 	
@@ -16,7 +19,8 @@
 		\label{eq:stuartlandauequation_polar}
 	\end{equation}
 
-	For the radial dynamical variable the Stuart-Landau oscillator has two fixed points where the derivative $\dot{r}$ vanishes $r = 0$ and $r = \sqrt{-\lambda /\operatorname{Re}(\gamma)}$ whose stability depends on $\lambda$ and $\operatorname{Re}(\gamma)$. In the supercritical case ($\operatorname{Re}(\gamma) < 0 $) the oscillator has a focus at $r=0$ for $lambda < 0$ and a stable limit cycle in the case of $\lambda > 0$.  
+	For the radial dynamical variable the Stuart-Landau oscillator has two fixed points where the derivative $\dot{r}$ vanishes $r = 0$ and $r = \sqrt{-\lambda /\operatorname{Re}(\gamma)}$ whose stability depends on $\lambda$ and $\operatorname{Re}(\gamma)$. For $\operatorname{Re}(\gamma) < 0 $ (supercritical case).
+	
 
 	\begin{figure}
 		\centering
@@ -29,7 +33,7 @@
 
 
 
-The limit cycle (LC) which is shown in (\ref{fig:stuart_spiral}, left) is depending on the ratio or $\lambda$ and $Re \left[\gamma \right]$. 
+The limit cycle (LC) which is shown in fig \ref{fig:stuart_spiral} is depending on the ratio or $\lambda$ and $Re \left[\gamma \right]$.
 
 
 
@@ -39,14 +43,8 @@ As can be seen in (eq. \ref{eq:stuartlandauequation}), the equation has a linear
 
 \subsection{Networks}
 
-In mathematics networks are collections of vertices and edges which connect the former. Vertices can have a name or some descriptor that makes them uniquely identifiable. Usually they are indexed $1..N$ for a network of size $N$. An edge $i \rightarrow j $ (with $i,j \in [1..N]$) is connecting vertex $i$ with vertex $j$. In a directed network there is a difference between $i \rightarrow j $ and $j \rightarrow i$. 
-todo: find some cool examples of directed and undirected networks.
-
-\begin{figure}
-	\includegraphics{\width=0.99\linewidth}{
-	}
-\end{figure}
-
+Vertices blabla \
+Edges blabla. \
 
 	\subsubsection{circulant Matrix}
     A circulant matrix has the same entries its row vectors, but with its entries rotated one element to the right relative to the previous row.
@@ -60,18 +58,41 @@ todo: find some cool examples of directed and undirected networks.
 \begin{figure}
 	\centering
 	\includegraphics[width=0.99\linewidth]{pics/signal_mask_vis}
-	\caption{A timeseries (black) with constant interpolation ("sample \& hold") between samples and the corresponding masked signal (blue). The mask length is counted in clockcycles (cc) and the time per virtual node is counted in $\theta$. Here $\theta = 12s$ and $1cc = 16 \ \theta = 272 s $}
+	\caption{A timeseries (black) with constant interpolation ("sample \& hold") between samples and the corresponding masked signal (blue). The mask length is counted in clockcycles (cc) and the time per virtual node is counted in $\theta$. Here $\theta = 12s$ and $1cc = 16 \theta = 272s $}
 	\label{fig:signal_mask_vis}
 	%feedInVis_stuartlandau.nb
 \end{figure}
 
-\subsection{Small world networks}
-	The term small world network was introduced in \cite{WAT98a} and describes a predominately locally coupled network with few non-local edges. 
 	
 
 \subsection{Dynamics of rings of stuart landau oscillators}
 	pony-states (von André)
 	
+\subsection{Reservoir computing}
+
 	
+	It is therefor distinct from the "classical" van-Neumann computer architecture where  The term "reservoir" is abstract as the actual physical systems
+	 reservoir can be a literal bucket of water \cite{FER03}
+	
+	
+\subsection{Reservoir computing tasks}
+	The reservoir computing performance of a given dynamic system can be quantified by testing its predictions for certain tasks. In machine learning the task is usually to predict a certain value from an initial set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and base truth is quantified as the error. The closer the prediction is to the ground truth, the better the system performs a given task.
+	
+
+	
+
+\subsubsection{Linear Memory Recall}
+	The simplest task a reservoir can perform is to repeat the the information that was fed into it at a certain point in time.  
+
+
+	\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{pics/linearMemoryCurveN1}
+	\caption{The linear memory capacities for differently many steps into the past. The system is able to perfectly reproduce inputs up until $12$ steps into the past. $N=1, vN=128, \lambda=-0.02, \omega=1, \gamma=-0.1, \theta=12, \tau=2176$. }
+	\label{fig:linearMemoryRecallCurveN1}
+	\end{figure}
+
+
+\subsubsection{NARMA10 NRMSE}
 
 % different stuart landau scenarios - hopf bifurcation
