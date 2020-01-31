@@ -1,0 +1,25 @@
+\begin{thebibliography}{Wat98}
+
+\bibitem[FER03]{FER03}
+C.~Fernando and S.~Sojakka.
+\newblock Pattern Recognition in a Bucket.
+\newblock In {\em Advances in Artificial Life}, Seiten 588--597, 2003.
+
+\bibitem[LAR12]{LAR12}
+L.~Larger, M.~C. Soriano, D.~Brunner, L.~Appeltant, J.~M. Gutierrez,
+  L.~Pesquera, C.~R. Mirasso and I.~Fischer.
+\newblock Photonic information processing beyond Turing: an optoelectronic
+  implementation of reservoir computing.
+\newblock Opt. Express {\bf 20}, 3241--3249 (2012).
+
+\bibitem[SAN17a]{SAN17a}
+G.~Van~der Sande, D.~Brunner and M.~C. Soriano.
+\newblock Advances in photonic reservoir computing.
+\newblock Nanophotonics {\bf 6}, 561 (2017).
+
+\bibitem[WAT98]{WAT98}
+D.~J. Watts and S.~H. Strogatz.
+\newblock {{C}ollective dynamics of 'small-world' networks}.
+\newblock Nature {\bf 393}, 440--442 (1998).
+
+\end{thebibliography}

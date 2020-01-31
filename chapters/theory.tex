@@ -54,10 +54,25 @@ Edges blabla. \
 	By multiplexing the input signal one can create virtual nodes in a network. The analogy to a real network can be best understood if the input signal is masked with a binary mask containing only values of either $0$ or $1$. 
 	
 	here add dependency of total linear memory on number of nodes and virtal nodes.
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.9\linewidth]{pics/rNplot}
+		\caption{changing rc performance for increasing number or real nodes $rN$ in unidirectianally coupled ring networks. (see some plot).}
+		\label{fig:rN_1-32}
+	\end{figure}
+
+	\begin{figure}
+	\centering
+	\includegraphics[width=15cm]{pics/vNplot}
+	\caption{changing rc performance for increasing number or virtual nodes $rN$ in unidirectionally coupled ring networks. (see some plot).}
+		\label{fig:vN_1-32}
+	\end{figure}
+
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.99\linewidth]{pics/signal_mask_vis}
+	\includegraphics[width=15cm]{pics/signal_mask_vis}
 	\caption{A timeseries (black) with constant interpolation ("sample \& hold") between samples and the corresponding masked signal (blue). The mask length is counted in clockcycles (cc) and the time per virtual node is counted in $\theta$. Here $\theta = 12s$ and $1cc = 16 \theta = 272s $}
 	\label{fig:signal_mask_vis}
 	%feedInVis_stuartlandau.nb
@@ -69,10 +84,11 @@ Edges blabla. \
 	pony-states (von André)
 	
 \subsection{Reservoir computing}
-
 	
-	It is therefor distinct from the "classical" van-Neumann computer architecture where  The term "reservoir" is abstract as the actual physical systems
-	 reservoir can be a literal bucket of water \cite{FER03}
+	\subsubsection{Measuring computation performance}
+	We can measure how well a dynamical system perform computations by testing it in a variety of benchmarks. Dynamical systems are continuously evolving in time, thus reservoir computation mostly is mostly tested on timeseries data. There exist also approaches of using RC on datasets that do not involve datasets without a temporal dimension e.g. image classification of single images \cite{}
+	
+	
 	
 	
 \subsection{Reservoir computing tasks}
