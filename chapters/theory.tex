@@ -1,5 +1,7 @@
 \section{Theory}
-
+	
+	%order:
+	%reservoir condition - fading memory etc.
 
 
 
@@ -53,6 +55,8 @@ Edges blabla. \
 	here: papers for explanation! 
 	\cite{KUR18}
 	
+	\cite{STE20} // off-resonance = better! --> reason for choosing 17 * 12.
+	
 	By multiplexing the input signal one can create virtual nodes in a network. The analogy to a real network can be best understood if the input signal is masked with a binary mask containing only values of either $0$ or $1$. 
 	
 	Different Mask types: discrete values with constant interpolation: binary, uniform - easy to implement)
@@ -99,7 +103,9 @@ Edges blabla. \
 	
 	
 \subsection{Reservoir computing tasks}
-	The reservoir computing performance of a given dynamic system can be quantified by testing its predictions for certain tasks. In machine learning the task is usually to predict a certain value from an initial set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and base truth is quantified as the error. The closer the prediction is to the ground truth, the better the system performs a given task.
+	The reservoir computing performance of a given reservoir can be quantified by testing its predictions for certain tasks. In machine learning the task is usually to predict a certain value or set of values from an input set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and base truth is used to quantify the error. The closer the prediction is to the ground truth, the better the system 
+	performs a given task. It is important to note that usually these predictions always aren't singular, but give a vector of probabilities. A neural network used for image classification will output a vector with probabilities e.g. it is quantifying the "dog-ness", the "tree-ness" or the "car-ness" of an input image. The actual decision is made by choosing the entry with the highest probability. 
+	For predictions based on timeseries data the same applies. They are represented by continuous values that the system puts out.  
 	
 
 	
@@ -117,5 +123,7 @@ Edges blabla. \
 
 
 \subsubsection{NARMA10 NRMSE}
+
+	
 
 % different stuart landau scenarios - hopf bifurcation
