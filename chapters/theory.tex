@@ -103,16 +103,16 @@ Edges blabla. \
 	
 	
 \subsection{Reservoir computing tasks}
-	The reservoir computing performance of a given reservoir can be quantified by testing its predictions for certain tasks. In machine learning the task is usually to predict a certain value or set of values from an input set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and base truth is used to quantify the error. The closer the prediction is to the ground truth, the better the system 
-	performs a given task. It is important to note that usually these predictions always aren't singular, but give a vector of probabilities. A neural network used for image classification will output a vector with probabilities e.g. it is quantifying the "dog-ness", the "tree-ness" or the "car-ness" of an input image. The actual decision is made by choosing the entry with the highest probability. 
-	For predictions based on timeseries data the same applies. They are represented by continuous values that the system puts out.  
 	
+	The reservoir computing performance of a given reservoir can be quantified by testing its predictions for certain tasks. The word "prediction" not necessarily means to predict the future value of something e.g. extend a timeseries into the future. Instead it often means the estimation of a value. A weather model which has been fed past temperature data can be tasked to "predict" the past humidity values. In machine learning the task is usually to predict a certain value or set of values from a set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and ground truth quantifies the error. The closer the prediction to the ground truth, the better the system performs a given task. 
+	It is important to note that usually these predictions are not of singular values, but give a vector of probabilities. A neural network used for image classification will output a vector with values e.g. it is quantifying the "dog-ness", the "tree-ness" or the "car-ness" of an input image. The actual decision is made by choosing the entry with the highest probability. 
+	For predictions based on timeseries data the same applies. They are represented by continuous values that the system puts out. Even if the desired output is of discrete nature e.g. "yes" or "no" the system will usually output a real number. 
+	
+	In general a sequence of inputs $u$ is drawn from a distribution. In this work only uniform distributions have been used. This sequence is used as input of a transformation which maps the sequence $u$ onto its target values $o$.
 
 	
-
 \subsubsection{Linear Memory Recall}
 	The simplest task a reservoir can perform is to repeat the the information that was fed into it at a certain point in time.  
-
 
 	\begin{figure}
 	\centering
@@ -121,9 +121,52 @@ Edges blabla. \
 	\label{fig:linearMemoryRecallCurveN1}
 	\end{figure}
 
+	\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{pics/weight_plot}
+	\caption{All weights $W_{i,s}$ attained through linear regression of the linear memory recalls $s \in [1,100]$ steps back. The system was a unidirectional ring with of $N_{real}=8$ and $N_{virtual}=16$ nodes. The total read-out dimension is $128$. For reconstruction of more recent inputs the inputs are small, but become enormous for inputs further in the past. This is the equivalent of "grasping at straws" as the system tries to extract information by multiplying microscopic fluctuations in the system state to linearily combine them to values between $[-1,1]$.}
+	\label{fig:linearMemoryRecallWeights}
+	\end{figure}
 
-\subsubsection{NARMA10 NRMSE}
+\subsection{Legendre polynomials as Nonlinear Transformations}
+	In order to investigate the nonlinear transformation capabilities one can use Legendre Polynomials \ref{LegendrePolynomialsDegrees} in order to transform a given input into a system. Legendre Polynomials have the useful property of being orthonormal to every other polynomial within an interval $\left[-1,1\right]$. This makes them ideal in order to measure linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}). Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{d}(x)$ is of course simply the identity. 
+	The idea of measuring nonlinear (as well as linear) transformation capacities through the means of Legendre polynomials is largely inspired from the publication \cite{DAM12}. Hence the terminology used in the latter shall be used here as well. 
+	As all nonlinear transformations of an input sequence $u^{h}$ can be expressed as a linear combination of Legendre polynomials with inputs in $u^{h}$ it is necessary to test all combinations. To elaborate: For the product of $2$ Legendre polynomials $L_{d_{1}}(u1)$ and $L_{d_{2}}(u2)$ with degrees $d_1$ and $d_2$ all combinations of $u1$ and $u2$ have to be calculated.
+	
+	Argh! kompliziert. \
+	
+	
+	
+	In order to investigate the different nonlinear transformation capabilities of a system it is necessary to iterate over all possible combinations of Products of Legendre polynomials  
+	
+	\begin{figure}
+		\includegraphics[width=0.99\linewidth]{pics/legendre_degrees}
+		\caption{Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ each shown for $x \in [-1,1]$ .}
+		\label{fig:legendreDegrees}
+	\end{figure}
+	
+	They are used in Neural networks as well blabla citecite findfind. 
+	\cite{VOELKER Legendre Memory Units: Continuous-TimeRepresentation in Recurrent Neural Networks}
+	%\begin{equation}
+		
+		
+		
+	%\label{eq:legendrePolynomials}
+	%\end{equation}
+	
+	
 
+\subsubsection{NARMA10 task}
+	Lastly, the performance was investigated by measuring its capacity to compute the NARMA10 task. The Nonlinear Autoregressive Moving Average Task \cite{HER12} is used in many publications as a benchmark. The sequence is calculated using an average of its last $10$ steps while also being fed a product of a random sequence taken at two different positions. In order to perform well, systems need memory up to $10$ steps (hence the "10") into the past as well as nonlinear transformation capacities. Recently it has been shown that the task is not ideal as its difficulty depends non-trivially on the shape of the distribution used \cite{KUBOTA_Arxive}. \\
+	The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10equation}. It is fed $2$ inputs from a sequence $u$ which is drawn from a uniform distribution $U(0,0.5)$ on interval $\left[0,0.5\right]$.
+	
+	\begin{equation}
+		A_{n+1} = 0.3 A_{n} + 0.05 A_{k}\left( \sum_{i=0}^{9} A_{k-9} \right) +1.5 u_{k-9} u_{k} + 0.1
+		\label{NARMA10equation}
+	\end{equation}
+
+
+	%here schöne plots mit narma.
 	
 
 % different stuart landau scenarios - hopf bifurcation
