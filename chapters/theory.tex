@@ -1,44 +1,135 @@
 \section{Theory}
+
+\subsection{Reservoir computing}
+
+
+
+	\subsubsection{Formalities}
+
+We can measure how well a dynamical system perform computations by testing it in a variety of benchmarks. Dynamical systems are continuously evolving in time, thus reservoir computation performance is usually tested on time-structured data. Benchmarks try to quantify the capacity to remember information previously fed into it and its ability to make nonlinear transformation of the data.\\ 
+
+The used benchmarks have an input sequence $\textbf{U}(t)$ and a $target$ sequence $\textbf{O}(t)$ with $t \in \mathbb{Z}$ being the time counted in clockcycles (cc). For a specific time $t$ the reservoir offers a number of outputs $\textbf{x}_{k}(t)$ which can be linearily combined in order to reach some $predicted$ value $\hat{\textbf{O}}(t)$. Ideally $\hat{\textbf{O}}(t) = \textbf{O}(t)$ which would represent a perfect reconstruction of the target value through the system. Usually machine learning systems give imperfect predictions $\hat{\textbf{O}}(t)$ that vary from the \emph{true} value $\textbf{O}(t)$.
+
+
+\subsubsection{Linear Memory Recall}
+The simplest task a reservoir can perform is to simply repeat the the information that was fed into it at a certain point in time. 
+
+	\begin{equation}
+		\begin{split}
+		O_{1}(t) & = U(t - 1) \\
+		O_{2}(t) & = U(t - 2) \\				
+		O_{3}(t) & = U(t - 3) \\
+		O_{n}(t) & = U(t - n)
+		\end{split}
+		\label{eq:linear_recall_task}
+	\end{equation}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{pics/linearMemoryCurveN1}
+	\caption{The linear memory capacities for varying steps into the past. The system is able to perfectly reproduce inputs up until $12$ steps into the past. $N=1, vN=128, \lambda=-0.02, \omega=1, \gamma=-0.1, \theta=12, \tau=2176$. }
+	\label{fig:linearMemoryRecallCurveN1}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{pics/weight_plot}
+	\caption{All weights $W_{i,s}$ attained through linear regression of the linear memory recalls $s \in [1,100]$ steps back. The system was a unidirectional ring with of $N_{real}=8$ and $N_{virtual}=16$ nodes. The total read-out dimension is $128$. For reconstruction of more recent inputs the inputs are small, but become enormous for inputs further in the past. This is the equivalent of "grasping at straws" as the system tries to extract information by multiplying microscopic fluctuations in the system state to linearily combine them to values between $[-1,1]$.}
+	\label{fig:linearMemoryRecallWeights}
+\end{figure}
+
+
+\subsection{Reservoir computing tasks}
+
+Typically reservoir computing tasks involve transformations on data sequences.
+
+The reservoir computing performance of a given reservoir can be quantified by testing its predictions for certain tasks. The word "prediction" not necessarily means to predict the future value of something e.g. extend a timeseries into the future. Instead it often means the estimation of a value. A weather model which has been fed past temperature data can be tasked to "predict" the past humidity values. In machine learning the task is usually to predict a certain value or set of values from a set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and ground truth quantifies the error. The closer the prediction to the ground truth, the better the system performs a given task. 
+It is important to note that usually these predictions are not of singular values, but give a vector of probabilities. A neural network used for image classification will output a vector with values e.g. it is quantifying the "dog-ness", the "tree-ness" or the "car-ness" of an input image. The actual decision is made by choosing the entry with the highest probability. 
+For predictions based on timeseries data the same applies. They are represented by continuous values that the system puts out. Even if the desired output is of discrete nature e.g. "yes" or "no" the system will usually output a real number. 
+
+In general a sequence of inputs $u$ is drawn from a distribution. In this work only uniform distributions have been used. This sequence is used as input of a transformation which maps the sequence $u$ onto its target values $o$.
+
+
+\subsection{Legendre polynomials as Nonlinear Transformations}
+
+In order to investigate the nonlinear transformation capabilities one can use Legendre polynomials  (fig.\ref{fig:legendreDegrees}) in order to transform inputs $\textbf{U}(t)$ into a system. Legendre Polynomials have the useful property of being orthonormal to every other polynomial within an interval $\left[-1,1\right]$. This makes them highly useful for measuring linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}. Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{1}(x)$ is of course simply the identity. 
+The idea of measuring nonlinear (as well as linear) transformation capacities through the means of Legendre polynomials is largely inspired from the publication \cite{DAM12}. Hence the terminology used in the latter shall be used here as well. 
+As all nonlinear transformations of an input sequence $\textbf{U}^{h}$ can be expressed as a linear combination of Legendre  polynomials with $h$ being the number of data points already fed into the system. With inputs in $\textbf{U}^{h}$ it is necessary to test all combinations. To elaborate: 
+For a singular Legendre polynomial $L_{d_{1}}(\textbf{U}(t_1))$ with degree $d_1$ all values of $t_1$ have to be tested.
+For the product of $2$ Legendre polynomials $L_{d_{1}}(\textbf{U}(t_1))$ and $L_{d_{2}}(\textbf{U}(t_2))$ with degrees $d_1$ and $d_2$ all combinations of $\textbf{U}(t_1)$ and $\textbf{U}(t_2)$ have to be calculated.
+For the product of $3$ Legendre polynomials $L_{d_{1}}(\textbf{U}(-t_1))$, $L_{d_{2}}(\textbf{U}(-t_2))$ and $L_{d_{3}}(\textbf{U}(-t_3))$ all combinations of ${t_1,t_2,t_3}$ have to be tested.
+
+So for the Product of $n$ Legendre polynomials there exist permutations ${\textbf{d}}={d_1,d_2,...d_n}$ of 
+
+
+
+
+
+
+In order to investigate the different nonlinear transformation capabilities of a system it is necessary to iterate over all possible combinations of Products of Legendre polynomials  
+
+\begin{figure}
+	\includegraphics[width=0.99\linewidth]{pics/legendre_degrees}
+	\caption{Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ each shown for $x \in [-1,1]$ .}
+	\label{fig:legendreDegrees}
+\end{figure}
+
+They are used in Neural networks as well blabla citecite findfind. 
+\cite{VOELKER Legendre Memory Units: Continuous-TimeRepresentation in Recurrent Neural Networks}
+%\begin{equation}
+
+
+%\label{eq:legendrePolynomials}
+%\end{equation}
+
+
+
+\subsubsection{NARMA10 task}
+Lastly, the performance was investigated by measuring its capacity to compute the NARMA10 task. The Nonlinear Autoregressive Moving Average Task \cite{HER12} is used in many publications as a benchmark. The sequence is calculated using an average of its last $10$ steps while also being fed a product of a random sequence taken at two different positions. In order to perform well, systems need memory up to $10$ steps (hence the "10") into the past as well as nonlinear transformation capacities. Recently it has been shown that the task is not ideal as its difficulty depends non-trivially on the shape of the distribution used \cite{KUBOTA_Arxive}. \\
+The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10equation}. It is fed $2$ inputs from a sequence $u$ which is drawn from a uniform distribution $U(0,0.5)$ on interval $\left[0,0.5\right]$.
+
+\begin{equation}
+A_{n+1} = 0.3 A_{n} + 0.05 A_{k}\left( \sum_{i=0}^{9} A_{k-9} \right) +1.5 u_{k-9} u_{k} + 0.1
+\label{NARMA10equation}
+\end{equation}
+
+
+%here schöne plots mit narma.
 	
 	%order:
 	%reservoir condition - fading memory etc.
 
-
-
-	\subsection{Stuart-Landau-Oscillator}
+\subsection{Stuart-Landau-Oscillator}
 	The Stuart-Landau oscillator is a dynamical system often used to model basic class 1 lasers. It can be written either as a single complex differential equation (\ref{eq:stuartlandauequation}) or a set of two equations written in polar coordinates (\ref{eq:stuartlandauequation_polar}). From the equation in polar coordinates easy to see that the equation has rotational symmetry as the radial differential equation does not change with the dynamical variable $\phi$.
-	
-	\begin{equation}	
-		\dot{z} = (\lambda +  i \omega + \gamma |z|^2 ) \; z
-		\label{eq:stuartlandauequation}		
-	\end{equation}
-	
-	\begin{equation}
-		\begin{split}
-		\dot{r} & = \lambda r + \operatorname{Re} (\gamma) \; r^{3} \\
-		\dot{\phi} &= i \omega + \operatorname{Im}(\gamma) \; r^{2} 
-		\end{split}
-		\label{eq:stuartlandauequation_polar}
-	\end{equation}
+
+\begin{equation}	
+	\dot{z} = (\lambda +  i \omega + \gamma |z|^2 ) \; z
+	\label{eq:stuartlandauequation}		
+\end{equation}
+
+\begin{equation}
+	\begin{split}
+	\dot{r} & = \lambda r + \operatorname{Re} (\gamma) \; r^{3} \\
+	\dot{\phi} &= i \omega + \operatorname{Im}(\gamma) \; r^{2} 
+	\end{split}
+	\label{eq:stuartlandauequation_polar}
+\end{equation}
 
 	For the radial dynamical variable the Stuart-Landau oscillator has two fixed points where the derivative $\dot{r}$ vanishes $r = 0$ and $r = \sqrt{-\lambda /\operatorname{Re}(\gamma)}$ whose stability depends on $\lambda$ and $\operatorname{Re}(\gamma)$. For $\operatorname{Re}(\gamma) < 0 $ (supercritical case).
-	
 
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.99\linewidth]{pics/stuart_landau_complex_Focus_LC}
-		\caption{$2$ very basic scenarios of the Stuart-Landau oscillator: Decay towards a single fixed point (left) or towards a limit cycle (right).}
-		\label{fig:stuart_spiral}
-		%nicht mehr
-		%stuart_landau_basic.nb
-	\end{figure}
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.99\linewidth]{pics/stuart_landau_complex_Focus_LC}
+	\caption{$2$ very basic scenarios of the Stuart-Landau oscillator: Decay towards a single fixed point (left) or towards a limit cycle (right).}
+	\label{fig:stuart_spiral}
+	%nicht mehr
+	%stuart_landau_basic.nb
+\end{figure}
 
 
 The limit cycle (LC) which is shown in fig \ref{fig:stuart_spiral} is depending on the ratio or $\lambda$ and $Re \left[\gamma \right]$.
-
-
-
 
 
 As can be seen in (eq. \ref{eq:stuartlandauequation}), the equation has a linear and a nonlinear term regarding the absolute value of $z$.
@@ -50,6 +141,7 @@ Edges blabla. \
 
 	\subsubsection{circulant Matrix}
     A circulant matrix has the same entries its row vectors, but with its entries rotated one element to the right relative to the previous row.
+
     
 \subsection{virtual Nodes and multiplexing}
 	here: papers for explanation! 
@@ -61,10 +153,10 @@ Edges blabla. \
 	
 	Different Mask types: discrete values with constant interpolation: binary, uniform - easy to implement)
 	continuous: any function or repeating noise-patterns. (more difficult, but )
-	
+
 	
 	here add dependency of total linear memory on number of nodes and virtal nodes.
-	
+
 	
 	\begin{figure}
 		\centering
@@ -74,9 +166,9 @@ Edges blabla. \
 	\end{figure}
 
 	\begin{figure}
-	\centering
-	\includegraphics[width=15cm]{pics/vNplot}
-	\caption{changing rc performance for increasing number or virtual nodes $rN$ in unidirectionally coupled ring networks. (see some plot).}
+		\centering
+		\includegraphics[width=15cm]{pics/vNplot}
+		\caption{changing rc performance for increasing number or virtual nodes $rN$ in unidirectionally coupled ring networks. (see some plot).}
 		\label{fig:vN_1-32}
 	\end{figure}
 
@@ -84,89 +176,17 @@ Edges blabla. \
 \begin{figure}
 	\centering
 	\includegraphics[width=15cm]{pics/signal_mask_vis}
-	\caption{A timeseries (black) with constant interpolation ("sample \& hold") between samples and the corresponding masked signal (blue). The mask length is counted in clockcycles (cc) and the time per virtual node is counted in $\theta$. Here $\theta = 12s$ and $1cc = 16 \theta = 272s $}
+	\caption{A timeseries of sampled data points \textcolor{myred}{\color{myred}$\sbullet[2]$}\,with its constant-interpolated signal between samples \rule[2pt]{25pt}{2.5pt}\, and the corresponding masked signals \textcolor{myblue}{\rule[2pt]{25pt}{2.5pt}} and \textcolor{myyellow}{\rule[2pt]{25pt}{2.5pt}}\,. The mask times (or lengths) are usually defined as $1$ clockcycle (cc, upper tick labels) and the time per virtual node called $\theta$. Here $\theta = 12s$ and $1cc = 16 \theta = 272s $}
 	\label{fig:signal_mask_vis}
 	%feedInVis_stuartlandau.nb
 \end{figure}
 
-	
+
 
 \subsection{Dynamics of rings of stuart landau oscillators}
 	pony-states (von André)
 	
-\subsection{Reservoir computing}
-	
-	\subsubsection{Measuring computation performance}
-	We can measure how well a dynamical system perform computations by testing it in a variety of benchmarks. Dynamical systems are continuously evolving in time, thus reservoir computation mostly is mostly tested on timeseries data. There exist also approaches of using RC on datasets that do not involve datasets without a temporal dimension e.g. image classification of single images \cite{}
-	
-	
-	
-	
-\subsection{Reservoir computing tasks}
-	
-	The reservoir computing performance of a given reservoir can be quantified by testing its predictions for certain tasks. The word "prediction" not necessarily means to predict the future value of something e.g. extend a timeseries into the future. Instead it often means the estimation of a value. A weather model which has been fed past temperature data can be tasked to "predict" the past humidity values. In machine learning the task is usually to predict a certain value or set of values from a set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and ground truth quantifies the error. The closer the prediction to the ground truth, the better the system performs a given task. 
-	It is important to note that usually these predictions are not of singular values, but give a vector of probabilities. A neural network used for image classification will output a vector with values e.g. it is quantifying the "dog-ness", the "tree-ness" or the "car-ness" of an input image. The actual decision is made by choosing the entry with the highest probability. 
-	For predictions based on timeseries data the same applies. They are represented by continuous values that the system puts out. Even if the desired output is of discrete nature e.g. "yes" or "no" the system will usually output a real number. 
-	
-	In general a sequence of inputs $u$ is drawn from a distribution. In this work only uniform distributions have been used. This sequence is used as input of a transformation which maps the sequence $u$ onto its target values $o$.
 
-	
-\subsubsection{Linear Memory Recall}
-	The simplest task a reservoir can perform is to repeat the the information that was fed into it at a certain point in time.  
-
-	\begin{figure}
-	\centering
-	\includegraphics[width=0.99\linewidth]{pics/linearMemoryCurveN1}
-	\caption{The linear memory capacities for differently many steps into the past. The system is able to perfectly reproduce inputs up until $12$ steps into the past. $N=1, vN=128, \lambda=-0.02, \omega=1, \gamma=-0.1, \theta=12, \tau=2176$. }
-	\label{fig:linearMemoryRecallCurveN1}
-	\end{figure}
-
-	\begin{figure}
-	\centering
-	\includegraphics[width=0.99\linewidth]{pics/weight_plot}
-	\caption{All weights $W_{i,s}$ attained through linear regression of the linear memory recalls $s \in [1,100]$ steps back. The system was a unidirectional ring with of $N_{real}=8$ and $N_{virtual}=16$ nodes. The total read-out dimension is $128$. For reconstruction of more recent inputs the inputs are small, but become enormous for inputs further in the past. This is the equivalent of "grasping at straws" as the system tries to extract information by multiplying microscopic fluctuations in the system state to linearily combine them to values between $[-1,1]$.}
-	\label{fig:linearMemoryRecallWeights}
-	\end{figure}
-
-\subsection{Legendre polynomials as Nonlinear Transformations}
-	In order to investigate the nonlinear transformation capabilities one can use Legendre Polynomials \ref{LegendrePolynomialsDegrees} in order to transform a given input into a system. Legendre Polynomials have the useful property of being orthonormal to every other polynomial within an interval $\left[-1,1\right]$. This makes them ideal in order to measure linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}). Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{d}(x)$ is of course simply the identity. 
-	The idea of measuring nonlinear (as well as linear) transformation capacities through the means of Legendre polynomials is largely inspired from the publication \cite{DAM12}. Hence the terminology used in the latter shall be used here as well. 
-	As all nonlinear transformations of an input sequence $u^{h}$ can be expressed as a linear combination of Legendre polynomials with inputs in $u^{h}$ it is necessary to test all combinations. To elaborate: For the product of $2$ Legendre polynomials $L_{d_{1}}(u1)$ and $L_{d_{2}}(u2)$ with degrees $d_1$ and $d_2$ all combinations of $u1$ and $u2$ have to be calculated.
-	
-	Argh! kompliziert. \
-	
-	
-	
-	In order to investigate the different nonlinear transformation capabilities of a system it is necessary to iterate over all possible combinations of Products of Legendre polynomials  
-	
-	\begin{figure}
-		\includegraphics[width=0.99\linewidth]{pics/legendre_degrees}
-		\caption{Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ each shown for $x \in [-1,1]$ .}
-		\label{fig:legendreDegrees}
-	\end{figure}
-	
-	They are used in Neural networks as well blabla citecite findfind. 
-	\cite{VOELKER Legendre Memory Units: Continuous-TimeRepresentation in Recurrent Neural Networks}
-	%\begin{equation}
-		
-		
-		
-	%\label{eq:legendrePolynomials}
-	%\end{equation}
-	
-	
-
-\subsubsection{NARMA10 task}
-	Lastly, the performance was investigated by measuring its capacity to compute the NARMA10 task. The Nonlinear Autoregressive Moving Average Task \cite{HER12} is used in many publications as a benchmark. The sequence is calculated using an average of its last $10$ steps while also being fed a product of a random sequence taken at two different positions. In order to perform well, systems need memory up to $10$ steps (hence the "10") into the past as well as nonlinear transformation capacities. Recently it has been shown that the task is not ideal as its difficulty depends non-trivially on the shape of the distribution used \cite{KUBOTA_Arxive}. \\
-	The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10equation}. It is fed $2$ inputs from a sequence $u$ which is drawn from a uniform distribution $U(0,0.5)$ on interval $\left[0,0.5\right]$.
-	
-	\begin{equation}
-		A_{n+1} = 0.3 A_{n} + 0.05 A_{k}\left( \sum_{i=0}^{9} A_{k-9} \right) +1.5 u_{k-9} u_{k} + 0.1
-		\label{NARMA10equation}
-	\end{equation}
-
-
-	%here schöne plots mit narma.
 	
 
 % different stuart landau scenarios - hopf bifurcation

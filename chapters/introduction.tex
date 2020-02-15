@@ -2,11 +2,10 @@
 
 \section{Introduction}
 
-	Reservoir Computing encompasses the field of machine learning in which the capacity to store and compute transform data is investigated in a wide variety of dynamical systems (reservoirs). Reservoir Computing (RC) is particularly interesting as computations can be performed by the physical systems directly. Today "classical" computers of the van-Neumann-type (or more generally of the Turing-machine-type) need rely on the existence of a digital space in which everything can be represented by a combination of discrete values ($0$ and $1$). In order to establish such a computing space in our analogue world  
+	Reservoir Computing encompasses the field of machine learning in which the capacity to store and perform computations on data is investigated in a wide variety of dynamical systems (reservoirs). It can be understood as a generalization of earlier recurrent neural network architectures echo state networks (ESN) and liquid state machines (LSM). The name Reservoir Computing (RC) is particularly interesting as computations can be performed by the physical systems directly. Today "classical" computers of the van-Neumann-type (or more generally of the Turing-machine-type) need rely on the existence of a digital space in which everything is represented by a combination of discrete values ($0$ and $1$). To create such a virtual space the usual unpredictability that inhabits the scales in which modern computer circuits exist in has to be tamed in order to create this virtual computing space. As the scales of modern transistors shrink they rapidly approach the scales in which quantum effects become problematic. But even without quantum tunneling to worry about the production of transistors at tiny scales becomes increasingly difficult. The scales of modern silicone-transistor based cpus are so small adequate light sources needed to imprint the conduction paths are becoming rare and hideously expensive to operate. We are at the waning end of Moore's Law.
 	
-	in the sense of the Turing-machine as a model is more like a virtual space created in our physical space. Within this virtual space everything is defined only in discrete units of "0" and "1". In order to create such a virtual space the usual unpredictability that inhabits the scales in which modern computer circuits exist in has to be tamed in order to create this virtual computing space. As the scales of modern transistors shrink they rapidly approach the scales in which quantum effects become problematic. The maintaining of this virtual space of $0$ and $1$ in which all our computations are performed is increasingly difficult. Modern CPU manufacturing has to take into account many error compensation algorithms in. Simultaneously manufacturing is becoming more challenging as well since the scales of modern transistors are so small the light sources needed for lithography are becoming rare.
-	
-	Reservoir computing is the circumventing of this virtual space of discrete values in order to perform computations directly in physical systems. A wide variety of systems can be used e.g. a literal bucket of water can act as a reservoir that performs computations \cite{FER03}. Albeit the most interesting applications lie in potential optical computers. RC offers a way of utilizing the highly complex dynamics of optical systems in order to perform computation on them. Optical Computers in the form of lasers appear to be an ideal application of RC, because of the timescales that laser dynamics.  Optical reservoir computers already perform classification tasks on very timescales unmatched by modern silicon electronics \cite{BRU13a}
+	Reservoir computing could circumvent several of today's difficulties by exploiting the physical dynamics directly without the need of discrete values of digital computation. 
+	A wide variety of systems can be used e.g. a literal bucket of water can act as a reservoir that performs computations \cite{FER03}. Albeit the most interesting applications lie in potential optical computers. RC offers a way of utilizing the highly complex dynamics of optical systems in order to perform computation on them. Optical Computers in the form of lasers appear to be an ideal application of RC, because of the timescales that laser dynamics.  Optical reservoir computers already perform classification tasks on very timescales unmatched by modern silicon electronics \cite{BRU13a}
 	Another expected benefit would be the vastly lower power consumption.  
 	
 
@@ -29,15 +28,25 @@
 	\cite{ATI00} - NARMA10 task introduction.
 	
 
+
+
 \subsection{blabla}
 
 Analyzing timeseries data is an important part of machine learning tasks. Many datasets can be regarded as a timeseries. Temperature, pressure and wind evolve over time and are fed into complicated climate prediction models in order to continue this timeseries into the future - predicting tomorrows weather patterns. The applications of extracting information from timeseries are vast. Predicting the stock market, driving an autonomous car based on a video stream and other vehicle metrics, recognizing types of heart arrhythmia or more general heart diseases and infections through analysis of electrocardiography by machine learning algorhithms (https://ieeexplore.ieee.org/abstract/document/7164783). Last, but not least: the most apparent machine learning application to date: voice recognition algorithms are predicting the meaning of audio information everytime we utter the magical words "Hi, Siri", "Ok, Google" or "Alexa...". 
 It can also be argued that classical prediction tasks that do not involve time-conscious datasets like images fed into one directional feed forward networks 
 
 
-\subsection{An example of reservoir computing}
-
-hier kommt das beispiel mit dem stein und dem teich.
+\subsection{An analogy for reservoir computing}
+	Let us imagine a pond. If we throw stones into the pond, they will make splashes and create concentric waves that propagate over the surface. If we miss the splash and therefor don't know the position of impact, could we still estimate where the stone landed two seconds prior? Could we estimate it three seconds prior? Or $20$ seconds prior? The answers would be yes, probably yes, possibly yes and our confidence would decrease further the longer we let the pattern of the waves progress. 
+	So for short amounts of time the pond has some kind of "memory" about previous events. This memory will decay as the waves' amplitude gets smaller. The pond has some kind of fading memory.
+	Additionally throwing similar stones at comparably similar positions of the pond will create similar wave patterns. The response of the pond to the stone's impact is not random. 
+	From the pattern of waves other parameters might be extracted as well provided we have seen enough throws of stones with the corresponding wave patterns. 
+	We might estimate size or weight, velocity, spin, angle and even shape of the stone just by looking at the waves. 
+	
+	Another counterintuitive possibility is the extraction of information that was \textit{not} inserted via the stones. For example given we might extract the product of the weights of two consecutive thrown stones by analyzing the interfering waves that originated at each of the impact regions. 
+	
+	
+	
 
 To understand the idea of reservoir computing one can imaging a pond of water. Now a stone is thrown into, creating ripples that propagate over the surface, reflect along edges and interfere with one another. The pond has some kind of short memory as ripples take time in order to disappear. 
 It is easy to imagine that from the pattern of ripples a spectator could estimate the position of a stone that was thrown in shortly before.  
