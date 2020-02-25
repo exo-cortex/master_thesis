@@ -1,25 +1,37 @@
-\section{Theory}
+\chapter{Theory}
 
 \subsection{Reservoir computing}
 
 
-
 	\subsubsection{Formalities}
 
-We can measure how well a dynamical system perform computations by testing it in a variety of benchmarks. Dynamical systems are continuously evolving in time, thus reservoir computation performance is usually tested on time-structured data. Benchmarks try to quantify the capacity to remember information previously fed into it and its ability to make nonlinear transformation of the data.\\ 
+\begin{tabular}{c|c}
+	\hline
+	\textbf{U}& uniformly distribution \\
+	\hline
+	$u^{-h}=(u_{-h},u_{-h+1},u_{0}) \in \textbf{U}^h$ & sequence of numbers drawn from a uniform distribution  \\	
+	\hline
+	$\textbf{O}$ & set of Targets or \emph{true} values \\
+	\hline
+	$\hat{\textbf{O}}$ & set of Predictions that the system makes\\
+	\hline
+\end{tabular}
+
+
+We can measure how well a dynamical system performs computations by testing it in a variety of benchmarks. Dynamical systems are continuously evolving in time, thus reservoir computation performance is usually tested on time-structured data. Benchmarks try to quantify the capacity to remember information previously fed into it and its ability to make nonlinear transformation of the data.\\ 
 
 The used benchmarks have an input sequence $\textbf{U}(t)$ and a $target$ sequence $\textbf{O}(t)$ with $t \in \mathbb{Z}$ being the time counted in clockcycles (cc). For a specific time $t$ the reservoir offers a number of outputs $\textbf{x}_{k}(t)$ which can be linearily combined in order to reach some $predicted$ value $\hat{\textbf{O}}(t)$. Ideally $\hat{\textbf{O}}(t) = \textbf{O}(t)$ which would represent a perfect reconstruction of the target value through the system. Usually machine learning systems give imperfect predictions $\hat{\textbf{O}}(t)$ that vary from the \emph{true} value $\textbf{O}(t)$.
-
 
 \subsubsection{Linear Memory Recall}
 The simplest task a reservoir can perform is to simply repeat the the information that was fed into it at a certain point in time. 
 
 	\begin{equation}
 		\begin{split}
-		O_{1}(t) & = U(t - 1) \\
-		O_{2}(t) & = U(t - 2) \\				
-		O_{3}(t) & = U(t - 3) \\
-		O_{n}(t) & = U(t - n)
+		O_{1}(t) & = u_{t - 1} \\
+		O_{2}(t) & = u_{t - 2} \\				
+		O_{3}(t) & = u_{t - 3} \\
+				 &\;\; \vdots \\
+		O_{n}(t) & = u_{t - n}
 		\end{split}
 		\label{eq:linear_recall_task}
 	\end{equation}
@@ -45,7 +57,7 @@ The simplest task a reservoir can perform is to simply repeat the the informatio
 Typically reservoir computing tasks involve transformations on data sequences.
 
 The reservoir computing performance of a given reservoir can be quantified by testing its predictions for certain tasks. The word "prediction" not necessarily means to predict the future value of something e.g. extend a timeseries into the future. Instead it often means the estimation of a value. A weather model which has been fed past temperature data can be tasked to "predict" the past humidity values. In machine learning the task is usually to predict a certain value or set of values from a set of inputs. Ideally the prediction can then be compared to the base truth and the difference between prediction and ground truth quantifies the error. The closer the prediction to the ground truth, the better the system performs a given task. 
-It is important to note that usually these predictions are not of singular values, but give a vector of probabilities. A neural network used for image classification will output a vector with values e.g. it is quantifying the "dog-ness", the "tree-ness" or the "car-ness" of an input image. The actual decision is made by choosing the entry with the highest probability. 
+It is important to note that usually these predictions are not of singular values, but give a vector of probabilities. A neural network used for image classification will output a vector with values e.g. it is quantifying the 'dog-ness', the 'tree-ness' or the 'car-ness' of an input image. The actual decision is made by choosing the entry with the highest probability. 
 For predictions based on timeseries data the same applies. They are represented by continuous values that the system puts out. Even if the desired output is of discrete nature e.g. "yes" or "no" the system will usually output a real number. 
 
 In general a sequence of inputs $u$ is drawn from a distribution. In this work only uniform distributions have been used. This sequence is used as input of a transformation which maps the sequence $u$ onto its target values $o$.
@@ -53,9 +65,16 @@ In general a sequence of inputs $u$ is drawn from a distribution. In this work o
 
 \subsection{Legendre polynomials as Nonlinear Transformations}
 
-In order to investigate the nonlinear transformation capabilities one can use Legendre polynomials  (fig.\ref{fig:legendreDegrees}) in order to transform inputs $\textbf{U}(t)$ into a system. Legendre Polynomials have the useful property of being orthonormal to every other polynomial within an interval $\left[-1,1\right]$. This makes them highly useful for measuring linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}. Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{1}(x)$ is of course simply the identity. 
-The idea of measuring nonlinear (as well as linear) transformation capacities through the means of Legendre polynomials is largely inspired from the publication \cite{DAM12}. Hence the terminology used in the latter shall be used here as well. 
-As all nonlinear transformations of an input sequence $\textbf{U}^{h}$ can be expressed as a linear combination of Legendre  polynomials with $h$ being the number of data points already fed into the system. With inputs in $\textbf{U}^{h}$ it is necessary to test all combinations. To elaborate: 
+In order to investigate the nonlinear transformation capabilities one can use Legendre polynomials  (Fig. \ref{fig:legendreDegrees}) in order to transform inputs $\textbf{U}(t)$. Legendre Polynomials have the useful property of being orthonormal to every other polynomial within an interval $\left[-1,1\right]$. This makes them highly useful for measuring linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}. Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{1}(x)$ is of course simply the identity, which makes it possible to investigate the linear memory capacity also.
+
+The idea of measuring nonlinear (as well as linear) transformation capacities through the means of Legendre polynomials is largely inspired from the publication \cite{DAM12}. Hence the terminology used in the latter shall be used here as well (where possible). 
+
+	\begin{equation}
+	f:U^{h}\rightarrow \mathbb{R}:u^{-h}\rightarrow f\left[ u^{-h}\right]
+	\label{eq:legendre_f_U_equaiont}
+	\end{equation}
+
+All nonlinear transformations of an input sequence $\textbf{U}^{h}$ can be expressed as a linear combination of Legendre  polynomials with $h$ being the number of data points already fed into the system. With inputs in $\textbf{U}^{h}$ it is necessary to test all combinations. To elaborate: 
 For a singular Legendre polynomial $L_{d_{1}}(\textbf{U}(t_1))$ with degree $d_1$ all values of $t_1$ have to be tested.
 For the product of $2$ Legendre polynomials $L_{d_{1}}(\textbf{U}(t_1))$ and $L_{d_{2}}(\textbf{U}(t_2))$ with degrees $d_1$ and $d_2$ all combinations of $\textbf{U}(t_1)$ and $\textbf{U}(t_2)$ have to be calculated.
 For the product of $3$ Legendre polynomials $L_{d_{1}}(\textbf{U}(-t_1))$, $L_{d_{2}}(\textbf{U}(-t_2))$ and $L_{d_{3}}(\textbf{U}(-t_3))$ all combinations of ${t_1,t_2,t_3}$ have to be tested.
@@ -85,23 +104,32 @@ They are used in Neural networks as well blabla citecite findfind.
 
 
 
-\subsubsection{NARMA10 task}
-Lastly, the performance was investigated by measuring its capacity to compute the NARMA10 task. The Nonlinear Autoregressive Moving Average Task \cite{HER12} is used in many publications as a benchmark. The sequence is calculated using an average of its last $10$ steps while also being fed a product of a random sequence taken at two different positions. In order to perform well, systems need memory up to $10$ steps (hence the "10") into the past as well as nonlinear transformation capacities. Recently it has been shown that the task is not ideal as its difficulty depends non-trivially on the shape of the distribution used \cite{KUBOTA_Arxive}. \\
-The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10equation}. It is fed $2$ inputs from a sequence $u$ which is drawn from a uniform distribution $U(0,0.5)$ on interval $\left[0,0.5\right]$.
-
+\subsubsection{NARMA10 - the Nonlinear Autoregressive Moving Average Task}
 \begin{equation}
 A_{n+1} = 0.3 A_{n} + 0.05 A_{k}\left( \sum_{i=0}^{9} A_{k-9} \right) +1.5 u_{k-9} u_{k} + 0.1
 \label{NARMA10equation}
 \end{equation}
 
+Lastly, the performance was investigated by measuring its capacity to compute the NARMA10 task. The Nonlinear Autoregressive Moving Average Task \cite{HER12} is used in many publications as a benchmark. The sequence is calculated using an average of its last $10$ steps while also being fed a product of a random sequence taken at two different positions. In order to perform well, systems need memory up to $10$ steps (hence the "10") into the past as well as nonlinear transformation capacities. Recently it has been shown that the task is not ideal as its difficulty depends non-trivially on the shape of the distribution used \cite{KUBOTA_Arxive}. \\
+The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10equation}. It is fed $2$ inputs from a sequence $u$ which is drawn from a uniform distribution $U(0,0.5)$ on interval $\left[0,0.5\right]$.
 
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=13cm]{pics/narma_vis}
+	\caption{Example for a uniformly drawn random sequence $U_n \in [0,0.5]$ that is used to create a Narma10 sequence $A_n$ with it. Here $A=0$ for $n<1$.}
+	\label{fig:narma_vis}
+\end{figure}
 %here schöne plots mit narma.
+	
+	
 	
 	%order:
 	%reservoir condition - fading memory etc.
 
 \subsection{Stuart-Landau-Oscillator}
-	The Stuart-Landau oscillator is a dynamical system often used to model basic class 1 lasers. It can be written either as a single complex differential equation (\ref{eq:stuartlandauequation}) or a set of two equations written in polar coordinates (\ref{eq:stuartlandauequation_polar}). From the equation in polar coordinates easy to see that the equation has rotational symmetry as the radial differential equation does not change with the dynamical variable $\phi$.
+	The Stuart-Landau oscillator is a dynamical system often used to model basic class 1 lasers i.e. laser systems that do not exhibit pulsing or chaotic behavior (some refs). It can be written either as a single complex differential equation (\ref{eq:stuartlandauequation}) or a set of two equations written in polar coordinates (\ref{eq:stuartlandauequation_polar}). From the equation in polar coordinates easy to see that the equation has rotational symmetry as the radial differential equation does not change with the dynamical variable $\phi$. The Parameter $\lambda$ is often called the \emph{pump current} in accordance to its practical meaning. 
 
 \begin{equation}	
 	\dot{z} = (\lambda +  i \omega + \gamma |z|^2 ) \; z
@@ -122,7 +150,7 @@ A_{n+1} = 0.3 A_{n} + 0.05 A_{k}\left( \sum_{i=0}^{9} A_{k-9} \right) +1.5 u_{k-
 \begin{figure}
 	\centering
 	\includegraphics[width=0.99\linewidth]{pics/stuart_landau_complex_Focus_LC}
-	\caption{$2$ very basic scenarios of the Stuart-Landau oscillator: Decay towards a single fixed point (left) or towards a limit cycle (right).}
+	\caption{$2$ very basic scenarios of the Stuart-Landau oscillator: Decay towards a single fixed point (off-state, left) or towards a stable oscillating state (limit cycle, right).}
 	\label{fig:stuart_spiral}
 	%nicht mehr
 	%stuart_landau_basic.nb
@@ -133,6 +161,24 @@ The limit cycle (LC) which is shown in fig \ref{fig:stuart_spiral} is depending 
 
 
 As can be seen in (eq. \ref{eq:stuartlandauequation}), the equation has a linear and a nonlinear term regarding the absolute value of $z$.
+
+\begin{equation}	
+\dot{z} = (\lambda + G J(t) + i \omega + \gamma |z|^2 ) \; z + \kappa e^{i \phi} z(t-\tau)
+\label{eq:stuartlandauequation_delayed_driven}		
+\end{equation}
+
+In this work we use a Stuart-Landau oscillator that has a varying bifurcation parameter $\hat{\lambda}(t)$ and a delayed feedback term $\kappa e^{i\phi}z(t-\tau)$. In our case $\hat{\lambda}(t)$ will always be an offset with only slight variations. We will therefore simply write  $\hat{\lambda}(t) = \lambda + G J(t)$ with $G \in \mathbb{R}$ being in the order of $0.01$ (if not stated otherwise). The input signal $J(t)$ will be the actual variation that is used to feed data into the system (see Fig. \ref{fig:signal_mask_vis}). 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=15cm]{pics/driven_and_delayed}
+	\caption{$|z(t)|$ of a driven Stuart-Landau oscillator with and without delayed feedback. (top): the expected limit cycle $r_{LC}=\sqrt{\left(\lambda+G J(t)\right)/Re(\gamma)}$ according to the pump current $J(t) \in [0,1]$ with $G=0.01$ and $\lambda=0.01$. (bottom): With delayed feedback patterns repeat after delay time $\tau$. The bump within the blue circle is not caused by input $J(t)$ at the time. For each clockcycle the system state is read out once per virtual node (black dots).}
+	\label{fig:driven_and_delayed}
+\end{figure}
+
+In Fig. \ref{fig:driven_and_delayed} a solution for $|z(t)|$ with and without delayed feedback is shown. Without it the intensity is exponentially decaying towards the new limit cycle (in black). With delayed feedback (bottom) previous inputs reappear: The little bump encased in the second blue circle is information that is fed back into the system. Usually the information isn't as visible or locally distinct, but a linear combination of all the given readouts 
+
+
 
 \subsection{Networks}
 

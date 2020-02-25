@@ -41,3 +41,17 @@ small world \cite{WAT98}.
 		\item increasing virtualization
 		\item increasing input strength
 	\end{itemize}
+
+\subsection{further investigations/open question}
+	interesting subjects that were not investigated in this work
+	\begin{itemize}
+		\item the flow of information within the network by omitting the readout from different nodes
+		\item designing tasks where two seperate data streams are being fed to different nodes in the network.
+		\item can a network perform two calculations on different streams of data? (aka quantify multitasking/crosstalk).
+	\end{itemize}
+
+by feeding information from different timeseries to different nodes within the same network the flow of information might be investigated. Also the mixing of those two streams of data. From two distributions $u_1$ and $u_2$ the tasks $O(u_1,u_2)$ can be derived. By omitting the readout of singular nodes the impact of them to the computation capacities might be investigated. This can be used in order to "chase" the importance of certain Nodes for different tasks.
+
+
+
+For a system trying to recall the values from a distribution $u_1$ the totally uncorrelated inputs from $u_2$ somewhere else in the system will act like noise. 
