@@ -17,6 +17,14 @@
 	\hline
 \end{tabular}
 
+A reservoir computer needs to exhibit three properties in order to perform computations in a meaningful i.e. useful way.
+
+\begin{itemize}
+	\item echo state property - the system state is only an echo of all previous inputs fed into the system
+	\item similar inputs create similar outputs
+	\item
+\end{itemize}
+
 
 We can measure how well a dynamical system performs computations by testing it in a variety of benchmarks. Dynamical systems are continuously evolving in time, thus reservoir computation performance is usually tested on time-structured data. Benchmarks try to quantify the capacity to remember information previously fed into it and its ability to make nonlinear transformation of the data.\\ 
 
@@ -65,7 +73,7 @@ In general a sequence of inputs $u$ is drawn from a distribution. In this work o
 
 \subsection{Legendre polynomials as Nonlinear Transformations}
 
-In order to investigate the nonlinear transformation capabilities one can use Legendre polynomials  (Fig. \ref{fig:legendreDegrees}) in order to transform inputs $\textbf{U}(t)$. Legendre Polynomials have the useful property of being orthonormal to every other polynomial within an interval $\left[-1,1\right]$. This makes them highly useful for measuring linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}. Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{1}(x)$ is of course simply the identity, which makes it possible to investigate the linear memory capacity also.
+In order to investigate the nonlinear transformation capabilities one can use Legendre polynomials  (Fig. \ref{fig:legendreDegrees}) in order to transform inputs $\textbf{U}(t)$.	Legendre Polynomials have the useful property of being orthonormal to every other Legendre polynomial within an interval $\left[-1,1\right]$. This makes them highly useful for measuring linearily independent nonlinear (but also linear) transformation capacities. Legendre polynomials $L_{d}(x)$ for degrees $d \in \{1-5\}$ are shown in fig.\ref{fig:legendreDegrees}. Depending on the definition they are scaled so that $L_{d}(1)=1$. The Legendre polynomial $L_{1}(x)$ is of course simply the identity, which makes it possible to investigate the linear memory capacity also.
 
 The idea of measuring nonlinear (as well as linear) transformation capacities through the means of Legendre polynomials is largely inspired from the publication \cite{DAM12}. Hence the terminology used in the latter shall be used here as well (where possible). 
 
@@ -129,7 +137,7 @@ The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10eq
 	%reservoir condition - fading memory etc.
 
 \subsection{Stuart-Landau-Oscillator}
-	The Stuart-Landau oscillator is a dynamical system often used to model basic class 1 lasers i.e. laser systems that do not exhibit pulsing or chaotic behavior (some refs). It can be written either as a single complex differential equation (\ref{eq:stuartlandauequation}) or a set of two equations written in polar coordinates (\ref{eq:stuartlandauequation_polar}). From the equation in polar coordinates easy to see that the equation has rotational symmetry as the radial differential equation does not change with the dynamical variable $\phi$. The Parameter $\lambda$ is often called the \emph{pump current} in accordance to its practical meaning. 
+	The Stuart-Landau oscillator is a dynamical system often used to model basic class 1 lasers i.e. laser systems that do not exhibit pulsing or chaotic behavior (some refs). It can be written either as a single complex differential equation (\ref{eq:stuartlandauequation}) or a set of two equations written in polar coordinates (\ref{eq:stuartlandauequation_polar}). From the equation in polar coordinates easy to see that the equation has rotational symmetry as the radial differential equation does not change with the dynamical variable $\phi$. The Parameter $\lambda$ is often called the \emph{pump current} in accordance to its practical meaning.
 
 \begin{equation}	
 	\dot{z} = (\lambda +  i \omega + \gamma |z|^2 ) \; z
@@ -139,7 +147,7 @@ The NARMA10 sequence is created by the iterative formula given by \ref{NARMA10eq
 \begin{equation}
 	\begin{split}
 	\dot{r} & = \lambda r + \operatorname{Re} (\gamma) \; r^{3} \\
-	\dot{\phi} &= i \omega + \operatorname{Im}(\gamma) \; r^{2} 
+	\dot{\phi} &= \omega + \operatorname{Im}(\gamma) \; r^{2} 
 	\end{split}
 	\label{eq:stuartlandauequation_polar}
 \end{equation}
@@ -167,20 +175,33 @@ As can be seen in (eq. \ref{eq:stuartlandauequation}), the equation has a linear
 \label{eq:stuartlandauequation_delayed_driven}		
 \end{equation}
 
-In this work we use a Stuart-Landau oscillator that has a varying bifurcation parameter $\hat{\lambda}(t)$ and a delayed feedback term $\kappa e^{i\phi}z(t-\tau)$. In our case $\hat{\lambda}(t)$ will always be an offset with only slight variations. We will therefore simply write  $\hat{\lambda}(t) = \lambda + G J(t)$ with $G \in \mathbb{R}$ being in the order of $0.01$ (if not stated otherwise). The input signal $J(t)$ will be the actual variation that is used to feed data into the system (see Fig. \ref{fig:signal_mask_vis}). 
+In this work we use a Stuart-Landau oscillator that has a varying bifurcation parameter $\hat{\lambda}(t)$ and a delayed feedback term $\kappa e^{i\phi}z(t-\tau)$. In our case $\hat{\lambda}(t)$ will always be an offset with only slight variations. We will therefore simply write  $\hat{\lambda}(t) = \lambda + G J(t)$ with $G \in \mathbb{R}$ being in the order of or exactly equal to $0.01$ (if not stated otherwise). The input signal $J(t)$ will be the actual variation that is used to feed data into the system (see Fig. \ref{fig:signal_mask_vis}). 
+
+\begin{figure}
+	\includegraphics[width=15cm]{pics/different_lambda_values}
+	\caption{Different values for $\lambda$ influence how fast the system's intensity \textcolor{myred}{\rule[2pt]{25pt}{2.5pt}} is responding to a given input signal. For a large value of $\lambda=0.25$ (top) the system's intensity almost instantaneously decays towards the expected limit cycle LC \rule[2pt]{25pt}{2.5pt}. The system is therefore determined exclusively by the current pump current. For intermediate values e.g. $\lambda=0.02$ (mid) the system's response is slower and can keep information longer. Very small values e.g. $\lambda=0.001$ (bottom) make the system respond too slow to react to a given input signal.}
+	\label{fig:stuart_driven_landau_lambda_impact}
+\end{figure}
 
 \begin{figure}
 	\centering
 	\includegraphics[width=15cm]{pics/driven_and_delayed}
-	\caption{$|z(t)|$ of a driven Stuart-Landau oscillator with and without delayed feedback. (top): the expected limit cycle $r_{LC}=\sqrt{\left(\lambda+G J(t)\right)/Re(\gamma)}$ according to the pump current $J(t) \in [0,1]$ with $G=0.01$ and $\lambda=0.01$. (bottom): With delayed feedback patterns repeat after delay time $\tau$. The bump within the blue circle is not caused by input $J(t)$ at the time. For each clockcycle the system state is read out once per virtual node (black dots).}
+	\caption{$|z|^{2}(t)$ of a driven Stuart-Landau oscillator with delayed feedback. Each clockcycle the system state is read out once per virtual node (red dots on the left). With delayed feedback patterns reappear after delay time $\tau$: the bump within the right blue rectangle is not caused by the input signal (above), but is an echo of the bump within the left blue rectangle. Without the delayed feedback ($\kappa=0$) the system response can be seen in the grey area in Fig.\ref{fig:stuart_driven_landau_lambda_impact}}
 	\label{fig:driven_and_delayed}
 \end{figure}
 
-In Fig. \ref{fig:driven_and_delayed} a solution for $|z(t)|$ with and without delayed feedback is shown. Without it the intensity is exponentially decaying towards the new limit cycle (in black). With delayed feedback (bottom) previous inputs reappear: The little bump encased in the second blue circle is information that is fed back into the system. Usually the information isn't as visible or locally distinct, but a linear combination of all the given readouts 
+In Fig. \ref{fig:driven_and_delayed} a solution for $|z(t)|$ with and without delayed feedback is shown. Without it the intensity is exponentially decaying towards the new limit cycle (in black). With delayed feedback (bottom) previous inputs reappear: The little bump encased in the second blue circle is information that is fed back into the system. Usually the information isn't as visible or locally distinct, but a linear combination of all given readouts.
 
 
 
 \subsection{Networks}
+
+	\begin{figure}
+		\centering
+		\includegraphics[width=12cm]{pics/graph_plot}
+		\caption{example graph}
+		\label{fig:example_graph}
+	\end{figure}
 
 Vertices blabla \
 Edges blabla. \
@@ -222,7 +243,7 @@ Edges blabla. \
 \begin{figure}
 	\centering
 	\includegraphics[width=15cm]{pics/signal_mask_vis}
-	\caption{A timeseries of sampled data points \textcolor{myred}{\color{myred}$\sbullet[2]$}\,with its constant-interpolated signal between samples \rule[2pt]{25pt}{2.5pt}\, and the corresponding masked signals \textcolor{myblue}{\rule[2pt]{25pt}{2.5pt}} and \textcolor{myyellow}{\rule[2pt]{25pt}{2.5pt}}\,. The mask times (or lengths) are usually defined as $1$ clockcycle (cc, upper tick labels) and the time per virtual node called $\theta$. Here $\theta = 12s$ and $1cc = 16 \theta = 272s $}
+	\caption{A timeseries of sampled data points \textcolor{myred}{\color{myred}$\sbullet[2]$}\,with its constant-interpolated signal between samples \rule[2pt]{25pt}{2.5pt}\, and the corresponding masked signals \textcolor{myblue}{\rule[2pt]{25pt}{2.5pt}} and \textcolor{myyellow}{\rule[2pt]{25pt}{2.5pt}}\,. The mask times (or lengths) are usually defined as $1$ clockcycle (cc, upper tick labels) and the time per virtual node called $\theta$. Here $\theta = 12$ and $1cc = 16 \theta = 272 $}
 	\label{fig:signal_mask_vis}
 	%feedInVis_stuartlandau.nb
 \end{figure}
