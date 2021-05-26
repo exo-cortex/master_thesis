@@ -1,5 +1,3 @@
-\chapter{one}
-
 \section{Introduction}
 
 	Reservoir Computing encompasses the field of machine learning in which the capacity to store and perform computations on data is investigated in a wide variety of dynamical systems (reservoirs). It can be understood as a generalization of earlier recurrent neural network architectures echo state networks (ESN) and liquid state machines (LSM). The name Reservoir Computing (RC) is particularly interesting as computations can be performed by the physical systems directly. Today "classical" computers of the van-Neumann-type (or more generally of the Turing-machine-type) need rely on the existence of a digital space in which everything is represented by a combination of discrete values ($0$ and $1$). To create such a virtual space the usual unpredictability that inhabits the scales in which modern computer circuits exist in has to be tamed in order to create this virtual computing space. As the scales of modern transistors shrink they rapidly approach the scales in which quantum effects become problematic. But even without quantum tunneling to worry about the production of transistors at tiny scales becomes increasingly difficult. The scales of modern silicone-transistor based cpus are so small adequate light sources needed to imprint the conduction paths are becoming rare and hideously expensive to operate. We are at the waning end of Moore's Law.
@@ -26,11 +24,41 @@
 	\cite{STE20} ? lesen
 	
 	\cite{ATI00} - NARMA10 task introduction.
-	
-
+	\cite{HOCHREITER98} - vanishing gradient. difficult to train RNNs -> don't train them at all.
+	\cite{AMI19} - timeseries prediction of laser dynamics
 
 
 \subsection{blabla}
+
+
+\subsection{a generalization}
+	\emph{All models are wrong, but some models are useful} - attributed to \emph{George Box}\\
+	
+	Natural Science can be understood as an exercise to create models. Models are derived from what we see around ourselves in the real world. A good model resembles our world (or aspects thereof) closely enough so that it enables us to predict outcomes. In order to predict the motion of a thrown stone physicists have a model called \emph{"projectile motion"}. This model when customized to closely fit the gravitational constant $g$ and the angle $\alpha$ and speed $v$ of ejection it is able to predict the real-world destination of the stone. 
+	
+	\begin{equation}
+	\left(\begin{matrix} x(t) \\ y(t) \end{matrix}\right) = \left(\begin{matrix} v t \cos\alpha \\ v t \sin \alpha + \frac{g}{2 }t^2 \end{matrix} \right)
+	\end{equation}
+	
+	The model is clearly wrong. \\
+	It does not account for the weight, size, shape of the stone. It does not account of aerial friction, wind, the stone's rotation (magnus effect) and/or that of the earth (coriolis effect). We might extend the model in order to get a more accurate prediction (see "ballistic motion"). But even then, the model would lack details as it does not account for  velocities close to the speed of light that would result in relativistic effects and/or nuclear fusion and fission of air and stone molecules colliding with each other. 
+	But still: the model is \emph{useful}, as it is able to approximate the stone's destination \emph{close enough} in most cases. If we need more detail, we can usually use a more detailed model.
+	
+	Scientists are usually trying to building models that represent certain aspects of the real world in order to infer underlying states or predict outcomes. Meteorologists have a models that approximate the weather, Astronomers have models that predict planetary motions and were in the past able to infer the existence of planets years before final confirmation. All these models were originally derived by careful consideration, expressed through mathematical equations and could be calculated analytically or numerically. 
+		
+	In recent years though machine learning went about the problem from a different angle. By mimicking the way we humans or animals solve problems machine learning has made enormous progress.
+	Whereas a physicist can predict or approximate where a stone lands by solving a differential equation, a dog can demonstrate the same capacity by catching a thrown piece of cheese in a fraction of a second. He can even apply aerodynamics when learning to catch a frisbee. The dog has built an internal model of the world which he uses to predict the trajectory of thrown objects (at least objects of interest).
+	Humans act the same way. We are building an internal model of the world through which we are capable of adequately predict real outcomes. We usually do this without solving equations. We build our models as detailed as needed: A soccer player will have more emphasis on dynamics of soccer balls. the player's model is more accurate by accounting for wind, magnus effect, surface friction and even ball-grass interactions. A talented player's internal model will even include other players and their immediate behavior in order to shoot the ball somewhere the other player does not expect.
+	\emph{"Being funny"} (i.e. having a great sense of humour) can be understood as a well working internal model of other people's thought processes. 
+
+	Intelligence is the \emph{ability to build models}.
+	
+	Applied to machine learning, this means a more intelligent algorithm is able to more quickly build a usefull model of some benchmark data. This build process can be seen as learning. As an example:
+	By feeding a dynamical system weather data and using its response in order to approximate target values we actually build a model that resembles our real world to a degree. If the model is \emph{useful}, we can predict the weather (e.g. the temperature tomorrow at 5 pm) \emph{sufficiently} well. 
+	
+	A great benefit of learned models is often that they need less resources in order to make predictions.
+	
+
 
 Analyzing timeseries data is an important part of machine learning tasks. Many datasets can be regarded as a timeseries. Temperature, pressure and wind evolve over time and are fed into complicated climate prediction models in order to continue this timeseries into the future - predicting tomorrows weather patterns. The applications of extracting information from timeseries are vast. Predicting the stock market, driving an autonomous car based on a video stream and other vehicle metrics, recognizing types of heart arrhythmia or more general heart diseases and infections through analysis of electrocardiography by machine learning algorhithms (https://ieeexplore.ieee.org/abstract/document/7164783). Last, but not least: the most apparent timeseries prediction application to this date: voice recognition algorithms are predicting the meaning of audio information everytime we utter the magical words "Hi, Siri", "Ok, Google" or "Alexa...". 
 More classical prediction tasks that do not involve time-conscious datasets like images fed into one directional convolutional feed forward networks can actually be seen as a rather remote abstraction from the way humans will look at an image. We tend to investigate a still image by looking at different parts not at once, but one after another, concentrating on details one after another. For areas where meaning is not immediately obvious we tend to "take another look". So even classical machine learning tasks e.g. image recognition tasks can be adapted as timeseries prediction tasks.  

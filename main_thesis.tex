@@ -1,7 +1,7 @@
 \documentclass[
     a4paper,
     11pt,
-    ]{scrreprt}
+    ]{article}
     
 %\usepackage[textwidth=18cm,textheight=10cm]{geometry}
 
@@ -12,10 +12,12 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{amsmath}
-\usepackage{amsfonts}
+%\usepackage{mathtools}
+%\usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{colortbl}
 
 \usepackage[margin=0.5cm,font=small,format=plain,indention=0.25cm,labelfont=bf]{caption}
 
@@ -30,6 +32,38 @@
 \definecolor{mybeige}{rgb}{0.957031, 0.863281, 0.753906}
 \definecolor{mygray}{rgb}{0.632813, 0.640625, 0.632813}
 \newcommand\sbullet[1][.5]{\mathbin{\vcenter{\hbox{\scalebox{#1}{$\bullet$}}}}}
+
+
+% tikz stuff
+\usepackage{tikz}
+\usepackage[customcolors]{hf-tikz}
+\tikzset{style blue/.style={
+		set fill color=myblue!75,
+		set border color=white,
+	},
+	style red/.style={
+		set fill color=myred!75,
+		set border color=white,
+	},
+	style yellow/.style={
+		set fill color=myyellow!75,
+		set border color=white,
+	},
+	style brown/.style={
+	set fill color=mybrown!75,
+	set border color=white,
+	},
+	hor/.style={
+		above left offset={-0.25,0.5},
+		below right offset={0.15,-0.125},
+		#1
+	},
+	ver/.style={
+		above left offset={-0.175,0.4},
+		below right offset={0.175,-0.15},
+		#1
+	}
+}
 
 
 
@@ -48,9 +82,11 @@ Hallo
 
 \input{chapters/todo.tex}
 \input{chapters/introduction.tex}
+\input{chapters/symbols.tex}
 \input{chapters/theory.tex}
 \input{chapters/results.tex}
 
+\input{chapters/conclusion.tex}
 
 \bibliographystyle{ag_label_wt}
 \renewcommand{\em}{\itshape}
@@ -59,4 +95,3 @@ Hallo
 \bibliography{ref}
 
 \end{document}
-
