@@ -1,5 +1,7 @@
+[note: this master thesis is in english, it contains miscellaneous german blocks of text in the beginning required by my (german) university]
+
 ## my master thesis 
-[this thesis is written in english, but contains some german passages in the beginning required by my (german) university]
+
 This is about reservoir computing - a cross-section between machine-learning and physics. It was written under supervision of prof. Kathy Lüdge, head of the theoretical laser dynamics work group at Technical University Berlin. It detailes my investigation of reservoir computing in networks of coupled stuart landau oscillators that are connected in a complex network topology of delay lines.
 The work involved writing a solver in C++ in order to numerically solve systems of DDEs (delay differential equations).
 The thesis was submitted in 2020.
