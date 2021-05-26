@@ -4,6 +4,8 @@ The work involved writing a solver in C++ in order to numerically solve systems 
 The thesis was submitted in 2020.
 
 This repository was originally used to write my thesis step by step. But in the end I wrote everything on my laptop which made pushing and pulling from different locations unneccessary.
-In the end this repository was simply updated to include the final version of the projectfiles as well as just the final pdf-file of the thesis I submitted.
+In the end this repository was simply updated to include the final version of the projectfiles as well as just the final pdf-file of the thesis I submitted. 
+
+This repository still contains remnants of old LaTeX-project files.
 
 tags: physics, theoretical physics, nonlinear dynamics, reservoir computing
